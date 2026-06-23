@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-MONGODB_URI = os.getenv("MONGODB_URI")
+MONGODB_URI = os.getenv("MONGODB_URI") or os.getenv("DATABASE_URL")
 if not MONGODB_URI:
     # Use a dummy local fallback for development if not provided, though it's recommended to set it
     MONGODB_URI = "mongodb://localhost:27017"

@@ -15,12 +15,18 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
+import boto3
+from botocore.exceptions import NoCredentialsError
 from database import get_db
 from models import DishResponse, DishUpdate, UserCreate, DishCreate, DishFullUpdate, UserUpdate, UserResponse, Review, DishReorderItem
 from auth import verify_password, get_password_hash, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES, get_current_user, get_current_admin
 from bson import ObjectId
 
 app = FastAPI(title="Nosh Dish Management API")
+
+S3_BUCKET_NAME = os.getenv("AWS_BUCKET_NAME")
+S3_REGION = os.getenv("AWS_REGION", "ap-south-1")
+s3_client = boto3.client('s3', region_name=S3_REGION)
 
 # Setup Rate Limiting
 limiter = Limiter(key_func=get_remote_address)
@@ -46,7 +52,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"], # Restrict CORS
+    allow_origins=["*"], # Allow Vercel domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -251,13 +257,19 @@ async def delete_dish(dish_id: str, current_admin = Depends(get_current_admin)):
 @app.post("/api/v1/upload")
 async def upload_image(file: UploadFile = File(...), current_admin = Depends(get_current_admin)):
     file_extension = os.path.splitext(file.filename)[1]
-    unique_filename = f"{ObjectId()}{file_extension}"
-    file_location = f"uploads/{unique_filename}"
+    unique_filename = f"dishes/{ObjectId()}{file_extension}"
     
-    with open(file_location, "wb+") as file_object:
-        shutil.copyfileobj(file.file, file_object)
-        
-    return {"imageUrl": f"/uploads/{unique_filename}"}
+    try:
+        s3_client.upload_fileobj(
+            file.file,
+            S3_BUCKET_NAME,
+            unique_filename,
+            ExtraArgs={'ContentType': file.content_type}
+        )
+        s3_url = f"https://{S3_BUCKET_NAME}.s3.{S3_REGION}.amazonaws.com/{unique_filename}"
+        return {"imageUrl": s3_url, "url": s3_url}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"S3 Upload Error: {str(e)}")
 
 @app.patch("/api/v1/dishes/reorder")
 async def reorder_dishes(items: List[DishReorderItem], current_admin = Depends(get_current_admin)):
@@ -511,16 +523,7 @@ async def websocket_chat_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         manager.disconnect_chat(websocket)
 
-@app.post("/api/v1/upload")
-async def upload_file(file: UploadFile = File(...), current_admin = Depends(get_current_admin)):
-    file_extension = file.filename.split(".")[-1] if "." in file.filename else "png"
-    unique_filename = f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{ObjectId()}.{file_extension}"
-    file_path = f"uploads/{unique_filename}"
-    
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-        
-    return {"url": f"http://localhost:8000/{file_path}"}
+
 
 @app.get("/api/v1/users/me", response_model=UserResponse)
 async def get_me(current_user = Depends(get_current_user)):
