@@ -1,64 +1,115 @@
-# Nosh Dish Management Dashboard
+# Nosh Dish Management System 🍽️
 
-A production-ready full-stack application for managing dishes available on Nosh AI-powered cooking robots.
+A production-ready, highly interactive full-stack web application designed for Nosh AI-powered cooking robots. This system allows **Users** to browse diverse cuisines and let fate decide their next meal, while empowering **Admins** to manage recipes, monitor real-time platform activity, and securely upload dish media.
 
-## Architecture Overview
+---
+
+## 🏗️ System Architecture
+
+The Nosh Dish Management System is built on a modern, decoupled cloud architecture.
 
 ```mermaid
 graph TD
-    Client[Web Browser - React/Vite]
-    Backend[FastAPI Backend]
-    DB[(MongoDB Atlas)]
+    subgraph Frontend Cloud
+        V[Vercel Global Edge Network]
+        Client[Web Browser - React App]
+    end
+
+    subgraph Backend Cloud
+        subgraph AWS EC2 Instance
+            N[Nginx Reverse Proxy]
+            Docker[(Docker Engine)]
+            FastAPI[FastAPI Backend]
+        end
+        S3[(AWS S3 Bucket)]
+    end
     
-    Client -- REST API (Axios) --> Backend
-    Client -- WebSocket (Real-time updates) <--> Backend
-    Backend -- Async Motor --> DB
+    subgraph Database Cloud
+        DB[(MongoDB Atlas)]
+    end
+    
+    V -- Delivers Static Assets --> Client
+    
+    Client -- "HTTPS REST API (Axios)" --> N
+    Client -- "WSS WebSockets (Real-time)" --> N
+    
+    N -- Routes Traffic :8000 --> Docker
+    Docker --> FastAPI
+    
+    FastAPI -- "Motor Async Driver" --> DB
+    FastAPI -- "Boto3 (IAM Role)" --> S3
 ```
 
-### Tech Stack
-- **Frontend**: React, Vite, Tailwind CSS, Axios, React Query, Lucide React
-- **Backend**: FastAPI, Motor (Async MongoDB), Pydantic, WebSockets
-- **Database**: MongoDB
-- **Infrastructure**: Docker & Docker Compose
+### Technology Stack
+- **Frontend (Vercel)**: React, Vite, Tailwind CSS, Recharts, Lucide Icons.
+- **Backend (AWS EC2)**: Python, FastAPI, WebSockets, Uvicorn, Docker, Docker Compose.
+- **Database (Atlas)**: MongoDB (NoSQL) accessed via Motor asynchronous driver.
+- **Object Storage (AWS S3)**: Secure image uploading using Boto3 and IAM instance profiles.
+- **Networking & Security**: DuckDNS, Let's Encrypt (Certbot) SSL/HTTPS, Nginx.
 
-## Setup Guide
+---
+
+## ✨ Key Features
+
+1. **Dual Role Access System**
+   - **Users**: Access to the "Spin the Wheel" recipe randomizer, live social feed, and categorized browsing.
+   - **Admins**: Access to system analytics, advanced data tables, and CRUD capabilities for managing dishes. Protected by JWT Authentication.
+
+2. **Real-time Synchronization (WebSockets)**
+   - The platform utilizes a custom WebSocket connection manager. When an Admin adds or edits a dish, the backend instantly broadcasts the changes to all connected browsers, rendering the UI live without any page refresh.
+
+3. **Intelligent Cloud Media Handling**
+   - Admin dish image uploads are securely routed directly to an AWS S3 bucket using EC2 IAM Role permissions, completely omitting the need to expose sensitive AWS Secret Keys in environment variables.
+
+4. **Resilient Data Pipelines**
+   - Fallback environment variables within `docker-compose.yml` guarantee backend stability.
+   - Robust frontend search algorithms filter out unpopulated API data securely to prevent UI crashes.
+
+---
+
+## 🚀 Setup & Deployment Guide
 
 ### Prerequisites
-- Docker and Docker Compose installed
-- MongoDB instance (Atlas or local)
+- Docker and Docker Compose installed.
+- A MongoDB instance (Atlas).
+- An AWS S3 Bucket (For image uploads).
 
-### Environment Variables
-1. Copy `backend/.env.example` to `backend/.env`.
-2. Provide your `MONGODB_URI` in the `.env` file.
-
-### Local Development (Docker)
-
-To run the entire application locally using Docker:
-
-```bash
-docker-compose up -d --build
+### 1. Environment Configuration
+Create a `.env` file in the root directory (where `docker-compose.yml` resides) and provide your connection strings:
+```env
+MONGODB_URI="mongodb+srv://<username>:<password>@cluster.mongodb.net/nosh_management"
+AWS_BUCKET_NAME="your-s3-bucket-name"
+AWS_REGION="your-s3-region"
 ```
 
-- Frontend will be available at: http://localhost:3000
-- Backend API will be available at: http://localhost:8000
-- API Documentation (Swagger): http://localhost:8000/docs
-
-### Database Seeding
-To populate the database with sample dishes, you can run the seed script:
+### 2. Running the Backend
+The backend runs entirely inside a Docker container. To start the API and mount it to port 8000:
 ```bash
-docker-compose exec backend python scripts/seed.py
+docker compose up -d --build
+```
+*API Documentation (Swagger) is auto-generated and available at: `http://localhost:8000/docs`*
+
+### 3. Data Population (Seeding)
+To instantly populate the database with 30 real-world recipes (via DummyJSON API) and configure the master Admin account (`admin@nosh.com`):
+```bash
+# To generate the Master Admin and sample dishes:
+docker compose exec backend python scripts/seed.py
+
+# To pull 30 real-world recipes into the live database:
+docker compose exec backend python seed_recipes.py
 ```
 
-## API Documentation
-The API provides standard RESTful endpoints and a WebSocket connection for real-time updates.
-Visit `http://localhost:8000/docs` to see the full Swagger documentation.
+### 4. Running the Frontend
+In a separate terminal, navigate to the `frontend` folder to start the Vite development server:
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-- `GET /api/v1/health` - Health check
-- `GET /api/v1/dishes` - List all dishes
-- `PATCH /api/v1/dishes/{dishId}/toggle` - Toggle the publish status of a dish
-- `WS /ws/dishes` - WebSocket endpoint for real-time dish updates and activity logs.
+---
 
-## Design Highlights
-- **Responsive**: Adapts perfectly from Desktop to Tablet to Mobile screens.
-- **Premium UI**: Uses a custom Tailwind palette with sleek dark mode accents for a startup operations dashboard feel.
-- **Real-time**: Leverages WebSockets to push changes instantly to all connected clients without refreshing.
+## 🛡️ Security & Recent Fixes
+- **CORS Policies**: Explicitly configured to securely allow Vercel origins while blocking malicious cross-origin requests.
+- **Auth Integrity**: Strict JWT Bearer token enforcement on all protected endpoints, including GET requests for Admin tables.
+- **Null Safety**: Hardened React search and filter algorithms to safely parse legacy or incomplete recipe records without throwing UI exceptions.
