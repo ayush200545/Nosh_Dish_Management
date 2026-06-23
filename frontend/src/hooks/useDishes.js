@@ -10,7 +10,9 @@ export function useDishes() {
   const { data: dishes, isLoading: isDishesLoading, error: dishesError } = useQuery({
     queryKey: ['dishes'],
     queryFn: async () => {
-      const response = await axios.get(`${API_URL}/api/v1/dishes`);
+      const response = await axios.get(`${API_URL}/api/v1/dishes`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
       return response.data;
     }
   });
@@ -18,7 +20,9 @@ export function useDishes() {
   const { data: activities, isLoading: isActivitiesLoading } = useQuery({
     queryKey: ['activities'],
     queryFn: async () => {
-      const response = await axios.get(`${API_URL}/api/v1/activities`);
+      const response = await axios.get(`${API_URL}/api/v1/activities`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
       return response.data;
     }
   });
@@ -35,7 +39,9 @@ export function useDishes() {
 
   const addDish = useMutation({
     mutationFn: async (dishData) => {
-      const response = await axios.post(`${API_URL}/api/v1/dishes`, dishData);
+      const response = await axios.post(`${API_URL}/api/v1/dishes`, dishData, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
       return response.data;
     },
     onSuccess: () => toast.success('Dish added successfully'),
@@ -44,7 +50,9 @@ export function useDishes() {
 
   const updateDish = useMutation({
     mutationFn: async ({ dishId, dishData }) => {
-      const response = await axios.put(`${API_URL}/api/v1/dishes/${dishId}`, dishData);
+      const response = await axios.put(`${API_URL}/api/v1/dishes/${dishId}`, dishData, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
       return response.data;
     },
     onSuccess: () => toast.success('Dish updated successfully'),

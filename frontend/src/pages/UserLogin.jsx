@@ -39,7 +39,7 @@ const UserLogin = () => {
       {/* Left Side: Welcome Area */}
       <div className="lg:w-1/2 p-8 lg:p-16 relative z-10 flex flex-col min-h-screen bg-white shadow-[0_0_50px_rgba(0,0,0,0.05)]">
         
-        <Link to="/" className="flex items-center gap-3 z-20 w-max mb-12">
+        <Link to="/" className="flex items-center gap-3 z-20 w-max mb-6">
           <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-green-500/30">
             <ChefHat size={20} />
           </div>
@@ -47,6 +47,11 @@ const UserLogin = () => {
             <h1 className="text-xl font-bold text-gray-900 tracking-tight">Nosh</h1>
             <p className="text-[10px] font-semibold text-gray-500 tracking-wider">AI Cooking Robot</p>
           </div>
+        </Link>
+        
+        <Link to="/" className="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors mb-8 w-max text-sm font-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          Back to Home
         </Link>
 
         <div className="relative z-20 mt-10">
