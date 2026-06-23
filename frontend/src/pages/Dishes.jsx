@@ -96,8 +96,11 @@ export default function Dishes() {
   if (isLoading) return <div className="p-8">Loading dishes...</div>;
 
   const filteredDishes = (dishes || []).filter(dish => {
-    const matchesSearch = dish.dishName?.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          dish.category?.toLowerCase().includes(searchTerm.toLowerCase());
+    const searchStr = (searchTerm || '').toLowerCase();
+    const dishName = (dish.dishName || '').toLowerCase();
+    const category = (dish.category || '').toLowerCase();
+    
+    const matchesSearch = dishName.includes(searchStr) || category.includes(searchStr);
     
     // If it's a User route, ONLY show published dishes
     const isUserRoute = !isAdminRoute;
