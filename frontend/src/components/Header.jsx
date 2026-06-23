@@ -27,7 +27,12 @@ export default function Header() {
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
           <input 
             type="text" 
-            placeholder="Search dishes..." 
+            placeholder="Search dishes... (Press Enter)" 
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && e.target.value.trim()) {
+                window.location.href = `/admin/dishes?search=${encodeURIComponent(e.target.value.trim())}`;
+              }
+            }}
             className="pl-10 pr-4 py-2 border border-slate-700 rounded-full bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent w-64 text-sm transition-all placeholder-slate-500"
           />
         </div>

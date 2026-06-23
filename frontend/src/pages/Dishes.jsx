@@ -19,8 +19,9 @@ export default function Dishes() {
   // Extract query params for category filtering
   const queryParams = new URLSearchParams(location.search);
   const categoryParam = queryParams.get('category');
+  const searchParam = queryParams.get('search') || '';
 
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(searchParam);
   const [statusFilter, setStatusFilter] = useState('All');
   const [ratingFilter, setRatingFilter] = useState('All');
   const [prepTimeFilter, setPrepTimeFilter] = useState('All');

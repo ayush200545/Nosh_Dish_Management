@@ -35,7 +35,12 @@ const UserNavbar = () => {
         <div className="relative hidden sm:block">
           <input 
             type="text" 
-            placeholder="Search dishes..." 
+            placeholder="Search dishes... (Press Enter)" 
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && e.target.value.trim()) {
+                window.location.href = `/dishes?search=${encodeURIComponent(e.target.value.trim())}`;
+              }
+            }}
             className="bg-gray-100 border-none rounded-full px-4 py-2 pl-10 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 w-64"
           />
           <svg className="w-4 h-4 text-gray-400 absolute left-3 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
