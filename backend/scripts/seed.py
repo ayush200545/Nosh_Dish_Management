@@ -9,45 +9,33 @@ from database import get_db
 
 sample_dishes = [
     {
-        "dishId": "DISH-001",
-        "dishName": "Butter Chicken",
-        "category": "North Indian",
-        "imageUrl": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?q=80&w=300&auto=format&fit=crop",
+        "dishName": "Jeera Rice",
+        "dishId": "1",
+        "imageUrl": "https://nosh-assignment.s3.ap-south-1.amazonaws.com/jeera-rice.jpg",
         "isPublished": True
     },
     {
-        "dishId": "DISH-002",
         "dishName": "Paneer Tikka",
-        "category": "North Indian",
-        "imageUrl": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?q=80&w=300&auto=format&fit=crop",
-        "isPublished": False
-    },
-    {
-        "dishId": "DISH-003",
-        "dishName": "Pasta Alfredo",
-        "category": "Italian",
-        "imageUrl": "https://images.unsplash.com/photo-1645112411341-6c4fd023714a?q=80&w=300&auto=format&fit=crop",
+        "dishId": "2",
+        "imageUrl": "https://nosh-assignment.s3.ap-south-1.amazonaws.com/paneer-tikka.jpg",
         "isPublished": True
     },
     {
-        "dishId": "DISH-004",
-        "dishName": "Veg Biryani",
-        "category": "Indian",
-        "imageUrl": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?q=80&w=300&auto=format&fit=crop",
+        "dishName": "Rabdi",
+        "dishId": "3",
+        "imageUrl": "https://nosh-assignment.s3.ap-south-1.amazonaws.com/rabdi.jpg",
         "isPublished": True
     },
     {
-        "dishId": "DISH-005",
-        "dishName": "Hakka Noodles",
-        "category": "Chinese",
-        "imageUrl": "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=300&auto=format&fit=crop",
-        "isPublished": False
+        "dishName": "Chicken Biryani",
+        "dishId": "4",
+        "imageUrl": "https://nosh-assignment.s3.ap-south-1.amazonaws.com/chicken-biryani.jpg",
+        "isPublished": True
     },
     {
-        "dishId": "DISH-006",
-        "dishName": "Dal Makhani",
-        "category": "Indian",
-        "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=300&auto=format&fit=crop",
+        "dishName": "Alfredo Pasta",
+        "dishId": "5",
+        "imageUrl": "https://nosh-assignment.s3.ap-south-1.amazonaws.com/alfredo-pasta.jpg",
         "isPublished": True
     }
 ]
