@@ -11,30 +11,35 @@ sample_dishes = [
     {
         "dishName": "Jeera Rice",
         "dishId": "1",
+        "category": "North Indian",
         "imageUrl": "https://nosh-assignment.s3.ap-south-1.amazonaws.com/jeera-rice.jpg",
         "isPublished": True
     },
     {
         "dishName": "Paneer Tikka",
         "dishId": "2",
+        "category": "North Indian",
         "imageUrl": "https://nosh-assignment.s3.ap-south-1.amazonaws.com/paneer-tikka.jpg",
         "isPublished": True
     },
     {
         "dishName": "Rabdi",
         "dishId": "3",
+        "category": "Dessert",
         "imageUrl": "https://nosh-assignment.s3.ap-south-1.amazonaws.com/rabdi.jpg",
         "isPublished": True
     },
     {
         "dishName": "Chicken Biryani",
         "dishId": "4",
+        "category": "Mughlai",
         "imageUrl": "https://nosh-assignment.s3.ap-south-1.amazonaws.com/chicken-biryani.jpg",
         "isPublished": True
     },
     {
         "dishName": "Alfredo Pasta",
         "dishId": "5",
+        "category": "Italian",
         "imageUrl": "https://nosh-assignment.s3.ap-south-1.amazonaws.com/alfredo-pasta.jpg",
         "isPublished": True
     }
