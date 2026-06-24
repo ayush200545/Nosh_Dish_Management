@@ -50,9 +50,15 @@ const Home = () => {
               {isSpinning ? 'Spinning...' : 'Spin the Wheel!'}
             </button>
           </div>
-          <div className="relative z-10 w-32 h-32 sm:w-48 sm:h-48 rounded-full border-8 border-white/20 flex items-center justify-center bg-white/10 shadow-inner">
-            <span className="text-5xl">🎡</span>
-          </div>
+            <div className="relative z-10 hidden sm:block">
+              <div className={`w-32 h-32 sm:w-48 sm:h-48 rounded-full border-4 border-white/30 overflow-hidden shadow-2xl relative transition-all duration-700 ease-in-out ${isSpinning ? 'animate-[spin_0.5s_linear_infinite] scale-110 shadow-white/50' : 'animate-[spin_30s_linear_infinite]'}`}>
+                <img 
+                  src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=500&auto=format&fit=crop" 
+                  alt="Delicious food bowl" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
         </div>
 
         <div>
