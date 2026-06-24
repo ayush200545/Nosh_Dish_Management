@@ -165,6 +165,51 @@ export default function Settings() {
             </div>
           )}
 
+          {/* User Specific Settings */}
+          {user.role === 'user' && (
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden mt-6">
+              <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 2v2"/><path d="M12 22v-2"/><path d="m17 20.66-1-1.73"/><path d="M11 10.27 7 3.34"/><path d="m20.66 17-1.73-1"/><path d="m3.34 7 1.73 1"/><path d="M14 12h8"/><path d="M2 12h2"/><path d="m20.66 7-1.73 1"/><path d="m3.34 17 1.73-1"/><path d="m17 3.34-1 1.73"/><path d="m11 13.73-4 6.93"/></svg>
+                <h3 className="font-semibold text-slate-800">User Preferences</h3>
+              </div>
+              <div className="p-6 space-y-4">
+                
+                <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-100">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-white rounded-md shadow-sm">
+                      <Bell className="w-5 h-5 text-amber-500" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-slate-800">Recipe Recommendations</h4>
+                      <p className="text-sm text-slate-500">Get weekly emails with personalized dish ideas.</p>
+                    </div>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" className="sr-only peer" defaultChecked />
+                    <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+                  </label>
+                </div>
+
+                <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-100">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-white rounded-md shadow-sm">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-slate-800">Vegetarian Only</h4>
+                      <p className="text-sm text-slate-500">Only show vegetarian dishes in recommendations.</p>
+                    </div>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" className="sr-only peer" />
+                    <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+                  </label>
+                </div>
+
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
     </div>
