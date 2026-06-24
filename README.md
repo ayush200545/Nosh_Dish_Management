@@ -8,7 +8,7 @@ A production-ready, highly interactive full-stack web application designed for N
 
 The application is fully deployed and accessible via the internet.
 
-- **Frontend (Vercel)**: [https://nosh-dish-management.vercel.app](https://nosh-dish-management.vercel.app) *(Replace with your exact Vercel link)*
+- **Frontend (Vercel)**: [https://nosh-dish-management.vercel.app](https://nosh-dish-management.vercel.app)
 - **Backend API (AWS EC2)**: `https://nosh-api-ayush.duckdns.org`
 
 ### Test Accounts
