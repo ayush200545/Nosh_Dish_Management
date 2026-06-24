@@ -7,7 +7,7 @@ export function useDish(dishId) {
   const queryClient = useQueryClient();
 
   const getHeaders = () => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     return token ? { Authorization: `Bearer ${token}` } : {};
   };
 

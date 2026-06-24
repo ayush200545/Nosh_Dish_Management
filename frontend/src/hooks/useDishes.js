@@ -11,7 +11,7 @@ export function useDishes() {
     queryKey: ['dishes'],
     queryFn: async () => {
       const response = await axios.get(`${API_URL}/api/v1/dishes`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
       });
       return response.data;
     }
@@ -21,7 +21,7 @@ export function useDishes() {
     queryKey: ['activities'],
     queryFn: async () => {
       const response = await axios.get(`${API_URL}/api/v1/activities`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
       });
       return response.data;
     }
@@ -30,7 +30,7 @@ export function useDishes() {
   const toggleDishStatus = useMutation({
     mutationFn: async ({ dishId, isPublished }) => {
       await axios.patch(`${API_URL}/api/v1/dishes/${dishId}/toggle`, { isPublished }, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
       });
     },
     onSuccess: () => toast.success('Dish status updated'),
@@ -40,7 +40,7 @@ export function useDishes() {
   const addDish = useMutation({
     mutationFn: async (dishData) => {
       const response = await axios.post(`${API_URL}/api/v1/dishes`, dishData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
       });
       return response.data;
     },
@@ -51,7 +51,7 @@ export function useDishes() {
   const updateDish = useMutation({
     mutationFn: async ({ dishId, dishData }) => {
       const response = await axios.put(`${API_URL}/api/v1/dishes/${dishId}`, dishData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
       });
       return response.data;
     },
@@ -62,7 +62,7 @@ export function useDishes() {
   const deleteDish = useMutation({
     mutationFn: async (dishId) => {
       await axios.delete(`${API_URL}/api/v1/dishes/${dishId}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
       });
     },
     onSuccess: () => toast.success('Dish deleted successfully'),

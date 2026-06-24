@@ -85,7 +85,7 @@ export default function Dishes() {
     
     try {
       await axios.patch(`${import.meta.env.VITE_API_URL}/api/v1/dishes/reorder`, reorderPayload, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
       });
       // The backend will broadcast a DISH_UPDATED event, triggering a refetch automatically!
     } catch (err) {

@@ -7,7 +7,7 @@ export function useUser() {
   const queryClient = useQueryClient();
 
   const getHeaders = () => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     return {
       Authorization: `Bearer ${token}`
     };

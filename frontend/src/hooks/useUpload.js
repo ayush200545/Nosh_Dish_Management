@@ -13,7 +13,7 @@ export function useUpload() {
       const formData = new FormData();
       formData.append('file', file);
       
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       const response = await axios.post(`${API_URL}/api/v1/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',

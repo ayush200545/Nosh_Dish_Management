@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Request Interceptor
 axios.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -30,10 +30,10 @@ axios.interceptors.response.use(
     
     if (status === 401) {
       // Auto-logout if token is expired or unauthorized
-      if (localStorage.getItem('token')) {
+      if (sessionStorage.getItem('token')) {
         toast.error('Your session has expired. Please login again.');
-        localStorage.removeItem('token');
-        localStorage.removeItem('role');
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('role');
         window.location.href = '/';
       }
     } else if (status === 429) {
