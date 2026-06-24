@@ -4,6 +4,26 @@ A production-ready, highly interactive full-stack web application designed for N
 
 ---
 
+## 🚀 Live Demo & Credentials
+
+The application is fully deployed and accessible via the internet.
+
+- **Frontend (Vercel)**: [https://nosh-dish-management.vercel.app](https://nosh-dish-management.vercel.app) *(Replace with your exact Vercel link)*
+- **Backend API (AWS EC2)**: `https://nosh-api-ayush.duckdns.org`
+
+### Test Accounts
+To evaluate the Dual-Role system and test the toggle functionality, please use the following credentials to log in:
+
+**System Administrator (Dashboard & Management Access)**
+- **Email:** `admin@nosh.com`
+- **Password:** `Nosh@123456`
+
+**Standard User (Public Display & Randomizer Access)**
+- **Email:** `user@nosh.com`
+- **Password:** `Nosh@123456`
+
+---
+
 ## 🏗️ System Architecture
 
 The Nosh Dish Management System is built on a modern, decoupled cloud architecture.
