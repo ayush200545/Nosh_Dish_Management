@@ -24,6 +24,8 @@ import UserFavorites from './pages/UserFavorites';
 import UserLayout from './components/UserLayout';
 import AdminLayout from './components/AdminLayout';
 
+import UserRegister from './pages/UserRegister';
+
 function AppRoutes() {
   const { isAuthenticated, role } = useAuth();
 
@@ -32,6 +34,7 @@ function AppRoutes() {
       {/* Public Routes */}
       <Route path="/" element={<RoleSelection />} />
       <Route path="/login" element={isAuthenticated && role === 'user' ? <Navigate to="/home" replace /> : <UserLogin />} />
+      <Route path="/register" element={isAuthenticated && role === 'user' ? <Navigate to="/home" replace /> : <UserRegister />} />
       <Route path="/admin/login" element={isAuthenticated && role === 'admin' ? <Navigate to="/admin" replace /> : <AdminLogin />} />
 
       {/* User Protected Routes */}
